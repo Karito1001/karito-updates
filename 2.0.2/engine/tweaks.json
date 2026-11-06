@@ -1,0 +1,3369 @@
+{
+ "version": "2.0.0",
+ "tweaks": [
+  {
+   "id": "power-ultimate",
+   "name": "Ultimate-Performance-Energieplan",
+   "desc": "Aktiviert den versteckten Höchstleistungs-Plan von Windows – keine Spar-Verzögerungen beim Takt.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "rec": true,
+   "actions": [
+    {
+     "type": "plan",
+     "guid": "e9a42b02-d5df-448d-aa00-03f14749eb61"
+    }
+   ]
+  },
+  {
+   "id": "gamemode-hags",
+   "name": "Game Mode & GPU-Scheduling",
+   "desc": "Windows-Spielmodus an und hardwarebeschleunigte GPU-Planung (HAGS) aktivieren.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "rec": true,
+   "restart": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\GameBar",
+     "name": "AutoGameModeEnabled",
+     "value": 1,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\GameBar",
+     "name": "AllowAutoGameMode",
+     "value": 1,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+     "name": "HwSchMode",
+     "value": 2,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "gamedvr-off",
+   "name": "Game DVR & Hintergrundaufnahme aus",
+   "desc": "Stoppt die unsichtbare Aufnahme im Hintergrund, die GPU-Leistung kostet.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\System\\GameConfigStore",
+     "name": "GameDVR_Enabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+     "name": "AppCaptureEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "windowed-opt",
+   "name": "Fenster-Spiele-Optimierung",
+   "desc": "Moderner Darstellungsweg für Borderless- und Fensterspiele: weniger Latenz, VRR möglich.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Latenz",
+   "rec": true,
+   "actions": [
+    {
+     "type": "regkv",
+     "path": "HKCU:\\Software\\Microsoft\\DirectX\\UserGpuPreferences",
+     "name": "DirectXUserGlobalSettings",
+     "key": "SwapEffectUpgradeEnable",
+     "val": "1"
+    }
+   ]
+  },
+  {
+   "id": "power-throttle-off",
+   "name": "Power-Throttling aus",
+   "desc": "Windows bremst Programme im Hintergrund nicht mehr künstlich aus. Auf Laptops etwas mehr Verbrauch.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+     "name": "PowerThrottlingOff",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "fast-startup-off",
+   "name": "Schnellstart aus",
+   "desc": "Echter Kaltstart beim Herunterfahren: Treiber und Speicher starten jedes Mal frisch.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Stabilität",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+     "name": "HiberbootEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "mmcss-games",
+   "name": "Spiele-Priorität (MMCSS)",
+   "desc": "Spiele bekommen bei CPU, GPU und Datenträger Vorrang vor Hintergrund-Aufgaben.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+     "name": "SystemResponsiveness",
+     "value": 10,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "GPU Priority",
+     "value": 8,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "Priority",
+     "value": 6,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "Scheduling Category",
+     "value": "High",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "SFIO Priority",
+     "value": "High",
+     "kind": "String"
+    }
+   ],
+   "info": "Bewirkt: Der Multimedia-Planer von Windows gibt Spielen mehr CPU-, GPU- und Datenträger-Vorrang und hält weniger Zeit für Hintergrundaufgaben frei (SystemResponsiveness 10 statt 20). Achtung: Downloads, Streams oder Aufnahmen im Hintergrund werden etwas langsamer."
+  },
+  {
+   "id": "prio-sep",
+   "name": "Vordergrund-Boost",
+   "desc": "Das aktive Spiel bekommt mehr CPU-Zeit als Programme im Hintergrund.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Latenz",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+     "name": "Win32PrioritySeparation",
+     "value": 38,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Das Programm im Vordergrund – dein Spiel – bekommt längere und häufigere CPU-Zeitscheiben. Achtung: Encoder, Downloads und andere Hintergrundprogramme laufen langsamer, solange das Spiel vorne ist."
+  },
+  {
+   "id": "vbs-off",
+   "name": "Speicher-Integrität (VBS) aus",
+   "desc": "Kann spürbar FPS bringen, senkt aber den Schutz vor Schadsoftware. Bei Anti-Cheat-Problemen zurücksetzen.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "high",
+   "effect": "FPS",
+   "restart": true,
+   "note": "Sicherheits-Abwägung",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard",
+     "name": "EnableVirtualizationBasedSecurity",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
+     "name": "Enabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Schaltet virtualisierungsbasierte Sicherheit und Speicher-Integrität ab; in CPU-lastigen Spielen bringt das oft einige Prozent FPS. Achtung: senkt den Schutz vor Schadsoftware und Treiber-Angriffen. Manche Anti-Cheats wie Vanguard oder FACEIT verlangen VBS – dann zurücksetzen. Wirkt nach einem Neustart."
+  },
+  {
+   "id": "svchost-group",
+   "name": "Dienste bündeln (weniger Prozesse)",
+   "desc": "Windows startet Dienste wieder gemeinsam statt jeden einzeln – oft 40 bis 80 Prozesse weniger. Kein Dienst wird abgeschaltet.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "restart": true,
+   "note": "größter Prozess-Hebel",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control",
+     "name": "SvcHostSplitThresholdInKB",
+     "value": 4294967295,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Windows startet Dienste wieder gemeinsam in wenigen Prozessen statt jeden einzeln – meist 40 bis 80 Prozesse weniger und etwas weniger RAM. Achtung: Stürzt ein Dienst ab, kann er die anderen seiner Gruppe mitreißen. FPS bringt es nicht."
+  },
+  {
+   "id": "maintenance-off",
+   "name": "Automatische Wartung aus",
+   "desc": "Keine Wartungs-Lastspitzen mehr im Hintergrund, während du spielst. Wartung startest du bei Bedarf selbst.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "mid",
+   "effect": "Stabilität",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\Maintenance",
+     "name": "MaintenanceDisabled",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Die automatische Wartung (Defragmentierung, Diagnose, Aufräumen) startet nicht mehr von selbst und erzeugt keine Lastspitzen beim Spielen. Achtung: Starte die Wartung ab und zu selbst über Systemsteuerung → Sicherheit und Wartung."
+  },
+  {
+   "id": "wer-off",
+   "name": "Fehlerberichte aus",
+   "desc": "Windows sammelt und sendet keine Absturzberichte mehr – weniger Hintergrundarbeit nach Abstürzen.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Prozesse",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting",
+     "name": "Disabled",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "timer-global",
+   "name": "Globale Timer-Auflösung",
+   "desc": "Stellt das alte Verhalten wieder her: Eine feine Timer-Auflösung eines Spiels gilt systemweit.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "mid",
+   "effect": "Latenz",
+   "restart": true,
+   "note": "umstritten",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+     "name": "GlobalTimerResolutionRequests",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Unter Windows 11 gilt eine angeforderte Timer-Auflösung, etwa 0,5 ms aus Karito, wieder für das ganze System statt nur für das anfordernde Programm. Voraussetzung für die Timer-Option. Achtung: etwas mehr Stromverbrauch, solange eine feine Auflösung aktiv ist. Neustart nötig, unter Windows 10 ohne Wirkung."
+  },
+  {
+   "id": "memcomp-off",
+   "name": "Speicherkomprimierung aus",
+   "desc": "Windows komprimiert keinen Arbeitsspeicher mehr – spart CPU-Zeit. Nur mit 16 GB RAM oder mehr sinnvoll.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "FPS",
+   "restart": true,
+   "note": "ab 16 GB RAM",
+   "actions": [
+    {
+     "type": "mmagent",
+     "enable": false
+    }
+   ],
+   "info": "Bewirkt: Windows komprimiert keinen Arbeitsspeicher mehr und spart dafür CPU-Zeit. Achtung: nur ab 16 GB RAM sinnvoll – mit wenig RAM lagert Windows mehr auf die Festplatte aus, dann ruckelt es eher."
+  },
+  {
+   "id": "svc-search-off",
+   "name": "Windows-Suchindex aus",
+   "desc": "Der Suchdienst indexiert nicht mehr im Hintergrund. Die Startmenü-Suche funktioniert weiter, Dateisuche wird langsamer.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "restart": true,
+   "actions": [
+    {
+     "type": "svc",
+     "name": "WSearch",
+     "start": "disabled"
+    }
+   ],
+   "info": "Bewirkt: Der Suchindex durchsucht keine Dateien mehr im Hintergrund – weniger Last auf Festplatte und CPU. Achtung: Die Suche in Startmenü und Explorer findet Dateiinhalte langsamer; Apps und Einstellungen findet sie weiter."
+  },
+  {
+   "id": "svc-print-off",
+   "name": "Druckdienst aus (kein Drucker)",
+   "desc": "Nur wenn du keinen Drucker nutzt – danach kann der PC nicht mehr drucken.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "restart": true,
+   "note": "Drucken aus",
+   "actions": [
+    {
+     "type": "svc",
+     "name": "Spooler",
+     "start": "disabled"
+    }
+   ],
+   "info": "Bewirkt: Die Druckwarteschlange startet nicht mehr, ein Dienst weniger. Achtung: Drucken und „Als PDF drucken“ funktionieren erst nach dem Zurücksetzen wieder."
+  },
+  {
+   "id": "svc-misc-off",
+   "name": "Link-Tracking & Offline-Karten aus",
+   "desc": "Zwei Dienste, die ein Gaming-PC nicht braucht.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "low",
+   "effect": "Prozesse",
+   "restart": true,
+   "actions": [
+    {
+     "type": "svc",
+     "name": "TrkWks",
+     "start": "disabled"
+    },
+    {
+     "type": "svc",
+     "name": "MapsBroker",
+     "start": "disabled"
+    }
+   ]
+  },
+  {
+   "id": "svc-iphlp-off",
+   "name": "IP-Hilfsdienst aus",
+   "desc": "Dienst für IPv6-Übergangstechniken. Xbox-Party-Chat kann danach schlechter verbinden.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "restart": true,
+   "note": "Xbox-Party",
+   "actions": [
+    {
+     "type": "svc",
+     "name": "iphlpsvc",
+     "start": "disabled"
+    }
+   ],
+   "info": "Bewirkt: Der IP-Hilfsdienst für IPv6-Tunnel (Teredo, 6to4) startet nicht mehr. Achtung: Wer IPv6-Tunnel, manche VPNs oder den Xbox-Party-Chat nutzt, lässt ihn besser an."
+  },
+  {
+   "id": "svc-sync-off",
+   "name": "Mail- & Kalender-Sync aus",
+   "desc": "Die Windows-Mail- und Kalender-Synchronisierung läuft nicht mehr im Hintergrund.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "restart": true,
+   "actions": [
+    {
+     "type": "svc",
+     "name": "OneSyncSvc",
+     "start": "disabled"
+    }
+   ],
+   "info": "Bewirkt: Die Synchronisierung der Windows-Apps Mail, Kalender und Kontakte läuft nicht mehr im Hintergrund. Achtung: Diese Apps aktualisieren sich erst nach dem Zurücksetzen wieder."
+  },
+  {
+   "id": "hibernate-off",
+   "name": "Ruhezustand aus",
+   "desc": "Löscht die Ruhezustandsdatei hiberfil.sys – spart oft mehrere GB auf C:. Der Schnellstart ist dann ebenfalls aus.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Speicher",
+   "actions": [
+    {
+     "type": "hiber"
+    }
+   ]
+  },
+  {
+   "id": "fth-off",
+   "name": "Fehlertoleranter Heap aus",
+   "desc": "Windows bremst Programme, die schon einmal abgestürzt sind, nicht mehr mit Schutz-Ebenen aus.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\FTH",
+     "name": "Enabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "ntfs-lastaccess-off",
+   "name": "Zugriffszeit-Stempel aus",
+   "desc": "NTFS schreibt nicht bei jedem Lesen einen Zeitstempel – weniger Schreibzugriffe auf die SSD.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "low",
+   "effect": "Stabilität",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+     "name": "NtfsDisableLastAccessUpdate",
+     "value": 2147483649,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "gamedvr-policy",
+   "name": "Game DVR per Richtlinie aus",
+   "desc": "Schaltet die Hintergrundaufnahme systemweit ab – auch für neue Benutzerkonten.",
+   "cat": "System",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+     "name": "AllowGameDVR",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "gamebar-tips-off",
+   "name": "Game-Bar-Tipps aus",
+   "desc": "Kein Einblend-Hinweis der Game Bar mehr beim Spielstart.",
+   "cat": "System",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\GameBar",
+     "name": "ShowStartupPanel",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "freeboost": true
+  },
+  {
+   "id": "process-diet",
+   "name": "Prozess-Diät",
+   "desc": "Alles, was dauerhaft Prozesse spart, in einem Rutsch: Dienste bündeln, Suchindex, Sync, Link-Tracking, Widgets, Hintergrund-Apps, Werbung, Fehlerberichte, KI-Schnappschüsse sowie Edge und Chrome im Hintergrund. Ziel: deutlich unter 150 Prozesse.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "includes": [
+    "svchost-group",
+    "svc-sync-off",
+    "svc-misc-off",
+    "widgets-off",
+    "bg-apps-off",
+    "tips-off",
+    "wer-off",
+    "ai-off",
+    "edge-bg-off",
+    "chrome-bg-off",
+    "copilot-off",
+    "gamebar-tips-off"
+   ],
+   "info": "Bewirkt: Bündelt Dienste und schaltet Suchindex, Sync, Fehlerberichte, Widgets, Hintergrund-Apps, KI-Funktionen und Werbung ab – deutlich weniger Prozesse und Hintergrundlast. Achtung: enthält fortgeschrittene Tweaks; was jeder einzelne bewirkt, steht bei ihm."
+  },
+  {
+   "id": "perf-max",
+   "name": "Leistungs-Maximum",
+   "desc": "Energieplan, CPU-Boost, Energiepräferenz, Mindesttakt, PCIe-, SSD- und USB-Energiesparen, Power-Throttling, Spiele-Priorität, Vordergrund-Boost und globale Timer-Auflösung – alles auf Leistung.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "FPS",
+   "includes": [
+    "power-ultimate",
+    "cpu-boost-aggr",
+    "cpu-epp-max",
+    "cpu-min-100",
+    "pcie-aspm-off",
+    "ahci-lpm-off",
+    "disk-idle-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "power-throttle-off",
+    "mmcss-games",
+    "prio-sep",
+    "timer-global"
+   ],
+   "info": "Bewirkt: Höchstleistungs-Plan, kein Core Parking, aggressiver Boost, Vordergrund-Boost und MMCSS-Vorrang – die CPU bleibt immer voll bereit. Achtung: mehr Stromverbrauch und Wärme, auf Laptops nur am Netzteil sinnvoll."
+  },
+  {
+   "id": "pcie-aspm-off",
+   "name": "PCIe-Energiesparen aus",
+   "desc": "Grafikkarte und SSD bleiben voll angebunden – keine Aufwach-Verzögerung.",
+   "cat": "Energie",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "rec": true,
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "501a4d13-42af-4429-9fd1-a8218c268e20",
+     "set": "ee12f906-d277-404b-b6da-e5fa1a576df5",
+     "value": 0
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "disk-idle-off",
+   "name": "Datenträger nie abschalten",
+   "desc": "Kein Nachlade-Ruckler, weil eine Festplatte erst wieder anlaufen muss.",
+   "cat": "Energie",
+   "tier": 3,
+   "risk": "low",
+   "effect": "Stabilität",
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "0012ee47-9041-4b5d-9b77-535fba8b1442",
+     "set": "6738e2c4-e8a5-4a42-b16a-e040e769756e",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "cpu-min-100",
+   "name": "CPU-Mindesttakt 100 %",
+   "desc": "Der Prozessor taktet nicht mehr herunter. Mehr Wärme und Verbrauch.",
+   "cat": "Energie",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Latenz",
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "set": "893dee8e-2bef-41e0-89c6-b55d0929964c",
+     "value": 100
+    }
+   ],
+   "info": "Bewirkt: Die CPU taktet nie herunter, es gibt keine Verzögerung beim Hochtakten. Achtung: mehr Stromverbrauch und Wärme, auf Laptops nur am Netzteil."
+  },
+  {
+   "id": "core-park-off",
+   "name": "Core Parking aus",
+   "desc": "Alle Kerne bleiben wach. Nicht für Ryzen 7950X3D/9950X3D – dort steuert Parking die Spiele-Kerne.",
+   "cat": "Energie",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "FPS",
+   "note": "CPU-abhängig",
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "set": "0cc5b647-c1df-4637-891a-dec35c318583",
+     "value": 100
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Windows legt keine CPU-Kerne schlafen, alle sind sofort einsatzbereit. Achtung: etwas mehr Verbrauch im Leerlauf. Bei Intel-CPUs mit P- und E-Kernen verteilt Windows Last anders – meist gut, in einzelnen Spielen nicht."
+  },
+  {
+   "id": "cpu-boost-aggr",
+   "name": "CPU-Boost aggressiv",
+   "desc": "Der Prozessor taktet bei Last sofort maximal hoch.",
+   "cat": "Energie",
+   "tier": 3,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "set": "be337238-0d82-4146-a960-4f3749d470c7",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "id": "cpu-epp-max",
+   "name": "Energiepräferenz: Höchstleistung",
+   "desc": "Moderne CPUs bevorzugen Leistung statt Strom sparen (EPP 0). Mehr Verbrauch.",
+   "cat": "Energie",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Latenz",
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "set": "36687f9e-e3a5-4dbf-b1dc-15eb381c6863",
+     "value": 0
+    }
+   ],
+   "info": "Bewirkt: Die Energiepräferenz der CPU steht auf maximale Leistung, sie boostet schneller und länger. Achtung: mehr Wärme und Lüftergeräusch, auf Laptops kürzere Akkulaufzeit."
+  },
+  {
+   "id": "cpu-idle-off",
+   "name": "CPU-Leerlauf aus (C-States)",
+   "desc": "Die CPU geht nie in den Leerlauf – minimal weniger Latenz, aber sehr hohe Temperatur. Nur Desktop mit guter Kühlung.",
+   "cat": "Energie",
+   "tier": 3,
+   "risk": "high",
+   "effect": "Latenz",
+   "note": "sehr heiß",
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "set": "5d76a2ca-e8c0-402f-a133-2158492d58ad",
+     "value": 1
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Die CPU bleibt immer in ihrem aktiven Zustand (keine C-States) – minimal kürzere Reaktionszeiten. Achtung: Sie läuft dann dauerhaft unter Volllast-Spannung: deutlich mehr Wärme und Verbrauch, auch im Leerlauf, und bei manchen CPUs sogar weniger Boost. Nur zum Testen und danach zurücksetzen."
+  },
+  {
+   "id": "ahci-lpm-off",
+   "name": "SSD-Verbindung immer aktiv",
+   "desc": "Die Verbindung zu SSD und Festplatte schläft nicht ein – keine Nachlade-Hänger.",
+   "cat": "Energie",
+   "tier": 3,
+   "risk": "low",
+   "effect": "Stabilität",
+   "rec": true,
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "0012ee47-9041-4b5d-9b77-535fba8b1442",
+     "set": "0b2d69d7-a2a1-449c-9680-f91c70521c60",
+     "value": 0
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "mpo-off",
+   "name": "Multi-Plane Overlay aus",
+   "desc": "Behebt auf vielen NVIDIA-Systemen Flackern und Mikroruckler. Wirkt nicht auf jeder Windows-Version.",
+   "cat": "Grafik",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Stabilität",
+   "restart": true,
+   "note": "Fix bei Rucklern",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+     "name": "OverlayTestMode",
+     "value": 5,
+     "kind": "DWord"
+    }
+   ],
+   "retired": "wirkt unter Windows 11 24H2/25H2 nicht mehr zuverlässig und kann Bildflackern auslösen"
+  },
+  {
+   "id": "autohdr-off",
+   "name": "Auto-HDR aus",
+   "desc": "Spart GPU-Leistung – nur relevant, wenn du einen HDR-Monitor hast.",
+   "cat": "Grafik",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "regkv",
+     "path": "HKCU:\\Software\\Microsoft\\DirectX\\UserGpuPreferences",
+     "name": "DirectXUserGlobalSettings",
+     "key": "AutoHDREnable",
+     "val": "0"
+    }
+   ]
+  },
+  {
+   "id": "vrr-windowed",
+   "name": "VRR für Fensterspiele",
+   "desc": "G-Sync/FreeSync auch in Borderless-Spielen. Nur mit VRR-Monitor sinnvoll.",
+   "cat": "Grafik",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "actions": [
+    {
+     "type": "regkv",
+     "path": "HKCU:\\Software\\Microsoft\\DirectX\\UserGpuPreferences",
+     "name": "DirectXUserGlobalSettings",
+     "key": "VRROptimizeEnable",
+     "val": "1"
+    }
+   ]
+  },
+  {
+   "id": "nv-overlay-svc",
+   "name": "NVIDIA-App-Dienst nur bei Bedarf",
+   "desc": "Der NVIDIA-Container startet nicht mehr automatisch – Overlay und Instant Replay sind dann aus.",
+   "cat": "Grafik",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Prozesse",
+   "restart": true,
+   "note": "NVIDIA",
+   "actions": [
+    {
+     "type": "svc",
+     "name": "NvContainerLocalSystem",
+     "start": "manual"
+    }
+   ],
+   "info": "Bewirkt: Der Dienst der NVIDIA-App startet nur noch bei Bedarf statt immer mit Windows. Achtung: Overlay, Instant Replay und Treiber-Hinweise der NVIDIA-App starten erst, wenn du die App öffnest."
+  },
+  {
+   "id": "tdr-delay",
+   "name": "Grafiktreiber-Timeout länger",
+   "desc": "Windows wartet 8 statt 2 Sekunden, bevor es den Grafiktreiber neu startet – weniger „Treiber reagiert nicht mehr“-Abstürze unter Volllast.",
+   "cat": "Grafik",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Stabilität",
+   "restart": true,
+   "note": "Fix bei Treiber-Abstürzen",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+     "name": "TdrDelay",
+     "value": 8,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Windows wartet 8 statt 2 Sekunden, bevor es einen hängenden Grafiktreiber neu startet – weniger Abstürze bei kurzen Lastspitzen. Achtung: Hängt der Treiber wirklich, bleibt das Bild länger stehen. Neustart nötig."
+  },
+  {
+   "id": "transparency-off",
+   "name": "Transparenzeffekte aus",
+   "desc": "Startmenü, Taskleiste und Fenster werden nicht mehr durchscheinend – entlastet vor allem Laptops und schwache Grafikkarten.",
+   "cat": "Grafik",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "EnableTransparency",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "mouse-accel-off",
+   "name": "Maus-Beschleunigung aus",
+   "desc": "„Zeigerbeschleunigung verbessern“ aus – jede Bewegung wird 1:1 umgesetzt. Pflicht fürs Aim.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "rec": true,
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Mouse",
+     "name": "MouseSpeed",
+     "value": "0",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Mouse",
+     "name": "MouseThreshold1",
+     "value": "0",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Mouse",
+     "name": "MouseThreshold2",
+     "value": "0",
+     "kind": "String"
+    }
+   ]
+  },
+  {
+   "id": "mouse-sens-6",
+   "name": "Zeigergeschwindigkeit 6/11",
+   "desc": "Die Stufe ohne Überspringen und Rundung – exakte 1:1-Übertragung. Der Desktop-Zeiger ändert ggf. sein Tempo.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Mouse",
+     "name": "MouseSensitivity",
+     "value": "10",
+     "kind": "String"
+    }
+   ],
+   "retired": "ersetzt durch den Regler „Mausgeschwindigkeit“ im FiveM-Center und unter Maus & Tastatur"
+  },
+  {
+   "id": "sticky-keys-off",
+   "name": "Einrastfunktion-Popups aus",
+   "desc": "Kein Fenster mehr, wenn du im Spiel 5× Shift drückst. Filter- und Umschalttasten-Hotkeys ebenfalls aus.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "rec": true,
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Accessibility\\StickyKeys",
+     "name": "Flags",
+     "value": "506",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Accessibility\\Keyboard Response",
+     "name": "Flags",
+     "value": "122",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Accessibility\\ToggleKeys",
+     "name": "Flags",
+     "value": "58",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "key-repeat-fast",
+   "name": "Tastatur-Wiederholung maximal",
+   "desc": "Kürzeste Verzögerung und höchste Wiederholrate beim Gedrückthalten einer Taste.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Keyboard",
+     "name": "KeyboardDelay",
+     "value": "0",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Keyboard",
+     "name": "KeyboardSpeed",
+     "value": "31",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "usb-suspend-off",
+   "name": "USB-Energiesparen aus",
+   "desc": "Maus, Tastatur und Headset schlafen nie ein – keine Aufwach-Verzögerung.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "rec": true,
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "2a737441-1930-4402-8d77-b2bebba308a3",
+     "set": "48e6b7a6-50f5-4782-a5d4-53bb8f07e226",
+     "value": 0
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "mouse-queue",
+   "name": "Maus-Puffer verkleinern",
+   "desc": "Kleinerer Eingabepuffer (MouseDataQueueSize 20). Nicht bei 4000/8000-Hz-Mäusen nutzen.",
+   "cat": "Eingabe",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Input",
+   "restart": true,
+   "note": "umstritten",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\mouclass\\Parameters",
+     "name": "MouseDataQueueSize",
+     "value": 20,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Der Puffer für Mausdaten schrumpft von 100 auf 20 Einträge, Eingaben werden ohne Stau abgearbeitet. Achtung: Bei Mäusen mit 4000 bis 8000 Hz kann ein zu kleiner Puffer Bewegungen verschlucken – dann zurücksetzen. Neustart nötig."
+  },
+  {
+   "id": "kbd-queue",
+   "name": "Tastatur-Puffer verkleinern",
+   "desc": "Kleinerer Eingabepuffer (KeyboardDataQueueSize 20). Bei verschluckten Tasten zurücksetzen.",
+   "cat": "Eingabe",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Input",
+   "restart": true,
+   "note": "umstritten",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\kbdclass\\Parameters",
+     "name": "KeyboardDataQueueSize",
+     "value": 20,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Der Tastatur-Puffer schrumpft von 100 auf 20 Einträge, Tastendrücke kommen ohne Stau an. Achtung: Bei sehr schnellen Makros oder Tastaturen mit hoher Abtastrate können Eingaben verloren gehen. Neustart nötig."
+  },
+  {
+   "id": "usb3-lpm-off",
+   "name": "USB-3-Energiesparen aus",
+   "desc": "USB-3-Anschlüsse bleiben voll aktiv – wichtig für Headsets, Mäuse und Funk-Dongles.",
+   "cat": "Eingabe",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Input",
+   "rec": true,
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "2a737441-1930-4402-8d77-b2bebba308a3",
+     "set": "d4e98f31-5ffe-4ce1-be31-1b38b384c009",
+     "value": 0
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "lang-hotkey-off",
+   "name": "Sprach-Hotkey aus (Alt+Shift)",
+   "desc": "Kein versehentlicher Wechsel des Tastaturlayouts mehr mitten im Spiel.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "rec": true,
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Keyboard Layout\\Toggle",
+     "name": "Hotkey",
+     "value": "3",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Keyboard Layout\\Toggle",
+     "name": "Language Hotkey",
+     "value": "3",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Keyboard Layout\\Toggle",
+     "name": "Layout Hotkey",
+     "value": "3",
+     "kind": "String"
+    }
+   ]
+  },
+  {
+   "id": "xbox-button-off",
+   "name": "Xbox-Taste öffnet keine Game Bar",
+   "desc": "Die Guide-Taste am Controller öffnet nicht mehr die Game Bar.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\GameBar",
+     "name": "UseNexusForGameBarEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "alt-tab-windows",
+   "name": "Alt+Tab nur Fenster",
+   "desc": "Alt+Tab zeigt keine Edge-Tabs mehr – schneller zurück ins Spiel.",
+   "cat": "Eingabe",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "MultiTaskingAltTabFilter",
+     "value": 3,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "mouse-hover-fast",
+   "name": "Schnellere Hover-Reaktion",
+   "desc": "Tooltips und Hover-Menüs reagieren sofort.",
+   "cat": "Eingabe",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Mouse",
+     "name": "MouseHoverTime",
+     "value": "10",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "net-throttle-off",
+   "name": "Network-Throttling aus",
+   "desc": "Hebt die Multimedia-Drosselung von Netzwerkpaketen auf – wichtig für Online-Spiele.",
+   "cat": "Netzwerk",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Ping",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+     "name": "NetworkThrottlingIndex",
+     "value": 4294967295,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "delivery-opt-off",
+   "name": "Update-Uploads aus",
+   "desc": "Windows verteilt keine Updates mehr über deine Leitung an fremde PCs.",
+   "cat": "Netzwerk",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Ping",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+     "name": "DODownloadMode",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "wifi-power-max",
+   "name": "WLAN-Höchstleistung",
+   "desc": "Der WLAN-Adapter spart keinen Strom mehr – stabilerer Ping über WLAN.",
+   "cat": "Netzwerk",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Ping",
+   "rec": true,
+   "actions": [
+    {
+     "type": "pwr",
+     "sub": "19cbb8fa-5279-450e-9fac-8a3d5fedd0c1",
+     "set": "12bbebe6-58d6-4636-95bb-3217ef867c1a",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "nagle-off",
+   "name": "Nagle-Algorithmus aus",
+   "desc": "Kleine TCP-Pakete werden sofort gesendet statt gesammelt (TCPNoDelay, TcpAckFrequency).",
+   "cat": "Netzwerk",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Ping",
+   "restart": true,
+   "note": "nur TCP",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\*",
+     "name": "TcpAckFrequency",
+     "value": 1,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\*",
+     "name": "TCPNoDelay",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Kleine TCP-Pakete gehen sofort raus statt gesammelt, verzögerte Bestätigungen fallen weg. Achtung: Das wirkt nur auf TCP – Fortnite und FiveM übertragen das Spielgeschehen vor allem per UDP. Für Launcher, Voice-Chat und Web hilft es, für den Spiel-Ping kaum."
+  },
+  {
+   "id": "dns-cloudflare",
+   "name": "DNS: Cloudflare 1.1.1.1",
+   "desc": "Schnellere Namensauflösung beim Verbinden (IPv4). Ändert nicht den Ping im Spiel.",
+   "cat": "Netzwerk",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Verbindung",
+   "actions": [
+    {
+     "type": "dns",
+     "servers": [
+      "1.1.1.1",
+      "1.0.0.1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nic-eee-off",
+   "name": "Energieeffizientes Ethernet aus",
+   "desc": "Der LAN-Adapter spart keine Energie mehr zwischen Paketen. Internet trennt beim Anwenden kurz.",
+   "cat": "Netzwerk",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Ping",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*EEE",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "nic-intmod-off",
+   "name": "Interrupt-Moderation aus",
+   "desc": "Jedes Paket wird sofort verarbeitet – weniger Latenz, etwas mehr CPU-Last. Internet trennt kurz.",
+   "cat": "Netzwerk",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Ping",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*InterruptModeration",
+     "value": 0
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Die Netzwerkkarte meldet jedes Paket sofort statt gesammelt – weniger Netzwerklatenz auf dem PC. Achtung: mehr CPU-Last bei großen Downloads; auf schwachen CPUs kann das ein paar FPS kosten."
+  },
+  {
+   "id": "dns-flush",
+   "name": "DNS-Cache leeren",
+   "desc": "Behebt Verbindungsprobleme nach Server- oder Netzwechseln.",
+   "cat": "Netzwerk",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Verbindung",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "dnsflush"
+    }
+   ]
+  },
+  {
+   "id": "nic-lso-off",
+   "name": "Large Send Offload aus",
+   "desc": "Der Netzwerkadapter bündelt keine großen Pakete mehr – gleichmäßigere Latenz. Internet trennt kurz.",
+   "cat": "Netzwerk",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Ping",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*LsoV2IPv4",
+     "value": 0,
+     "optional": true
+    },
+    {
+     "type": "nic",
+     "kw": "*LsoV2IPv6",
+     "value": 0,
+     "optional": true
+    }
+   ],
+   "info": "Bewirkt: Die CPU zerlegt große Sendungen selbst statt der Netzwerkkarte, die sie sonst länger puffert. Achtung: etwas mehr CPU-Last bei großen Uploads wie Streaming oder Cloud-Backups."
+  },
+  {
+   "id": "nic-flow-off",
+   "name": "Flusskontrolle aus",
+   "desc": "Der Adapter pausiert den Datenstrom nicht mehr. Internet trennt kurz.",
+   "cat": "Netzwerk",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "Ping",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*FlowControl",
+     "value": 0
+    }
+   ],
+   "info": "Bewirkt: Die Netzwerkkarte hält den Datenstrom nicht mehr auf Wunsch des Routers an – keine kurzen Stopps. Achtung: In überlasteten Netzen gehen dafür vereinzelt Pakete verloren."
+  },
+  {
+   "id": "nic-wake-off",
+   "name": "Wake-on-LAN aus",
+   "desc": "Der Netzwerkadapter weckt den PC nicht mehr auf und spart keine Wake-Funktionen.",
+   "cat": "Netzwerk",
+   "tier": 3,
+   "risk": "low",
+   "effect": "Stabilität",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*WakeOnMagicPacket",
+     "value": 0,
+     "optional": true
+    },
+    {
+     "type": "nic",
+     "kw": "*WakeOnPattern",
+     "value": 0,
+     "optional": true
+    }
+   ]
+  },
+  {
+   "id": "nic-green-off",
+   "name": "Realtek-Stromsparen aus",
+   "desc": "Green Ethernet, Advanced EEE, GigaLite und Energiesparmodus bei Realtek-Karten aus.",
+   "cat": "Netzwerk",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Ping",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "EnableGreenEthernet",
+     "value": 0,
+     "optional": true
+    },
+    {
+     "type": "nic",
+     "kw": "AdvancedEEE",
+     "value": 0,
+     "optional": true
+    },
+    {
+     "type": "nic",
+     "kw": "GigaLite",
+     "value": 0,
+     "optional": true
+    },
+    {
+     "type": "nic",
+     "kw": "PowerSavingMode",
+     "value": 0,
+     "optional": true
+    }
+   ]
+  },
+  {
+   "id": "nic-rss-on",
+   "name": "Receive Side Scaling an",
+   "desc": "Netzwerklast wird auf mehrere CPU-Kerne verteilt.",
+   "cat": "Netzwerk",
+   "tier": 3,
+   "risk": "low",
+   "effect": "Ping",
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*RSS",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "nic-rsc-off",
+   "name": "Receive Segment Coalescing aus",
+   "desc": "Der Netzwerkadapter fasst eingehende Pakete nicht mehr zusammen – Spielpakete kommen ohne Sammel-Wartezeit an. Internet trennt kurz.",
+   "cat": "Netzwerk",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Ping",
+   "tags": [
+    "delay"
+   ],
+   "actions": [
+    {
+     "type": "nic",
+     "kw": "*RscIPv4",
+     "value": 0,
+     "optional": true
+    },
+    {
+     "type": "nic",
+     "kw": "*RscIPv6",
+     "value": 0,
+     "optional": true
+    }
+   ],
+   "info": "Bewirkt: Eingehende Pakete gehen einzeln an Windows statt gebündelt – bei kleinen Spielpaketen fällt die kurze Sammelpause weg. Achtung: Bei sehr großen Downloads etwas mehr CPU-Last. Nicht jede Netzwerkkarte kennt die Einstellung, dann ändert sich nichts."
+  },
+  {
+   "id": "widgets-off",
+   "name": "Widgets komplett aus",
+   "desc": "Entfernt das Widgets-Board samt Hintergrund-Prozessen (Gruppenrichtlinie).",
+   "cat": "Registry",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Prozesse",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Dsh",
+     "name": "AllowNewsAndInterests",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "TaskbarDa",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "protHint": "Schalte Widgets dann selbst aus: Einstellungen → Personalisierung → Taskleiste → Widgets",
+   "freeboost": true
+  },
+  {
+   "id": "tips-off",
+   "name": "Werbung & Tipps aus",
+   "desc": "Keine Vorschläge, Tipps und automatisch installierten Werbe-Apps mehr.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Prozesse",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338389Enabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SystemPaneSuggestionsEnabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SoftLandingEnabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SilentInstalledAppsEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "bg-apps-off",
+   "name": "Store-Apps im Hintergrund aus",
+   "desc": "Store-Apps laufen nicht mehr unsichtbar weiter – weniger Prozesse und RAM.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Prozesse",
+   "rec": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+     "name": "GlobalUserDisabled",
+     "value": 1,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+     "name": "BackgroundAppGlobalToggle",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "edge-bg-off",
+   "name": "Edge im Hintergrund aus",
+   "desc": "Edge läuft nach dem Schließen nicht weiter und startet nicht vorab. Edge zeigt danach „Von deiner Organisation verwaltet“.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Prozesse",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "StartupBoostEnabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "BackgroundModeEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "chrome-bg-off",
+   "name": "Chrome im Hintergrund aus",
+   "desc": "Chrome-Apps laufen nach dem Schließen nicht weiter. Chrome zeigt danach „Von deiner Organisation verwaltet“.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Prozesse",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "BackgroundModeEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "toasts-off",
+   "name": "Benachrichtigungen aus",
+   "desc": "Keine Windows-Popups mehr beim Zocken – auch nicht von Apps.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+     "name": "ToastEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "search-web-off",
+   "name": "Websuche im Startmenü aus",
+   "desc": "Die Startmenü-Suche zeigt nur noch lokale Ergebnisse – schneller, ohne Bing.",
+   "cat": "Registry",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+     "name": "DisableSearchBoxSuggestions",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ],
+   "freeboost": true
+  },
+  {
+   "id": "menu-delay",
+   "name": "Menüs ohne Verzögerung",
+   "desc": "Kontext- und Untermenüs öffnen sofort.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Desktop",
+     "name": "MenuShowDelay",
+     "value": "0",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "startup-delay-off",
+   "name": "Autostart ohne Wartezeit",
+   "desc": "Autostart-Apps starten ohne künstliche Verzögerung nach der Anmeldung.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+     "name": "StartupDelayInMSec",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "visual-fx",
+   "name": "Visuelle Effekte reduzieren",
+   "desc": "Animationen und Transparenz aus – mehr Leistung auf schwächeren PCs.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+     "name": "VisualFXSetting",
+     "value": 2,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "EnableTransparency",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Desktop\\WindowMetrics",
+     "name": "MinAnimate",
+     "value": "0",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "TaskbarAnimations",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "update-noreboot",
+   "name": "Keine Zwangs-Neustarts",
+   "desc": "Windows startet nach Updates nicht mehr von selbst neu, solange du angemeldet bist.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+     "name": "NoAutoRebootWithLoggedOnUsers",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "ai-off",
+   "name": "KI-Schnappschüsse (Recall) aus",
+   "desc": "Windows speichert keine KI-Schnappschüsse deines Bildschirms.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Prozesse",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableAIDataAnalysis",
+     "value": 1,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableAIDataAnalysis",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "activity-off",
+   "name": "Aktivitätsverlauf aus",
+   "desc": "Windows protokolliert und sendet keinen Aktivitätsverlauf mehr.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+     "name": "PublishUserActivities",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+     "name": "UploadUserActivities",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+     "name": "EnableActivityFeed",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "classic-menu",
+   "name": "Klassisches Rechtsklick-Menü",
+   "desc": "Das alte, schnellere Kontextmenü ohne „Weitere Optionen anzeigen“.",
+   "cat": "Registry",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32",
+     "name": "(default)",
+     "value": "",
+     "kind": "String"
+    }
+   ]
+  },
+  {
+   "id": "start-recs-off",
+   "name": "Startmenü-Empfehlungen aus",
+   "desc": "Keine Tipp-, App- und Werbe-Empfehlungen mehr im Startmenü.",
+   "cat": "Registry",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_IrisRecommendations",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "freeboost": true
+  },
+  {
+   "id": "search-highlights-off",
+   "name": "Such-Highlights aus",
+   "desc": "Keine wechselnden Bilder und News im Suchfeld.",
+   "cat": "Registry",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+     "name": "IsDynamicSearchBoxEnabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "freeboost": true
+  },
+  {
+   "id": "explorer-ads-off",
+   "name": "Werbung im Explorer aus",
+   "desc": "Keine OneDrive- und Microsoft-365-Hinweise mehr im Datei-Explorer.",
+   "cat": "Registry",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowSyncProviderNotifications",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ],
+   "freeboost": true
+  },
+  {
+   "id": "more-ads-off",
+   "name": "Werbung in Einstellungen & Sperrbildschirm aus",
+   "desc": "Keine Vorschläge in den Einstellungen und keine „Wissenswertes“-Einblendungen auf dem Sperrbildschirm.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "RotatingLockScreenOverlayEnabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338387Enabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338393Enabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353694Enabled",
+     "value": 0,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353696Enabled",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "copilot-off",
+   "name": "Copilot-Knopf aus",
+   "desc": "Blendet den Copilot-Knopf aus und schaltet den alten Windows-Copilot per Richtlinie ab.",
+   "cat": "Registry",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Prozesse",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+     "name": "TurnOffWindowsCopilot",
+     "value": 1,
+     "kind": "DWord"
+    },
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowCopilotButton",
+     "value": 0,
+     "kind": "DWord"
+    }
+   ]
+  },
+  {
+   "id": "store-autoupdate-off",
+   "name": "Store-Updates nicht automatisch",
+   "desc": "Store-Apps laden Updates nicht mehr nebenbei herunter, während du spielst. Updates installierst du im Store selbst.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "mid",
+   "effect": "Ping",
+   "note": "Updates selbst holen",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\WindowsStore",
+     "name": "AutoDownload",
+     "value": 2,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Der Microsoft Store lädt Updates nicht mehr selbst im Hintergrund, also kein plötzlicher Download beim Spielen. Achtung: App-Updates startest du dann im Store selbst, auch Sicherheitsupdates von Store-Apps."
+  },
+  {
+   "id": "temp-clean",
+   "name": "Temp-Dateien leeren",
+   "desc": "Löscht temporäre Dateien von dir und Windows. Gesperrte Dateien werden übersprungen.",
+   "cat": "Aufräumen",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Speicher",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%TEMP%",
+      "%SystemRoot%\\Temp"
+     ],
+     "contents": true
+    }
+   ]
+  },
+  {
+   "id": "shader-clean",
+   "name": "Shader-Cache zurücksetzen",
+   "desc": "Leert DirectX-, NVIDIA- und AMD-Shader-Caches. Hilft gegen Ruckler nach Treiber-Updates; der erste Start lädt kurz neu.",
+   "cat": "Aufräumen",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Stabilität",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%LOCALAPPDATA%\\D3DSCache",
+      "%LOCALAPPDATA%\\NVIDIA\\DXCache",
+      "%LOCALAPPDATA%\\NVIDIA\\GLCache",
+      "%LOCALAPPDATA%\\AMD\\DxCache",
+      "%LOCALAPPDATA%\\AMD\\DxcCache",
+      "%LOCALAPPDATA%\\AMD\\VkCache"
+     ],
+     "contents": true
+    }
+   ]
+  },
+  {
+   "id": "dumps-clean",
+   "name": "Absturzberichte löschen",
+   "desc": "Entfernt alte Crash-Dumps deiner Programme.",
+   "cat": "Aufräumen",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Speicher",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%LOCALAPPDATA%\\CrashDumps"
+     ],
+     "contents": true
+    }
+   ]
+  },
+  {
+   "id": "fivem-cache",
+   "name": "FiveM-Cache leeren",
+   "desc": "Löscht Server-, Browser- und Prozess-Cache. Spieldaten bleiben; FiveM baut den Cache beim nächsten Start neu auf.",
+   "cat": "FiveM",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Stabilität",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\server-cache",
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\server-cache-priv",
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\cache\\browser",
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\cache\\subprocess"
+     ],
+     "contents": false,
+     "notRunning": "FiveM*"
+    }
+   ]
+  },
+  {
+   "id": "fivem-logs",
+   "name": "FiveM-Logs & Crashes leeren",
+   "desc": "Entfernt alte Log- und Absturzdateien von FiveM.",
+   "cat": "FiveM",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Speicher",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\logs",
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\crashes"
+     ],
+     "contents": true,
+     "notRunning": "FiveM*"
+    }
+   ]
+  },
+  {
+   "id": "fivem-prio",
+   "name": "FiveM: hohe CPU-Priorität",
+   "desc": "Der GTA-Prozess von FiveM startet automatisch mit hoher Priorität. Keine Spieldatei wird verändert.",
+   "cat": "FiveM",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ifeo",
+     "exes": [
+      "FiveM_GTAProcess.exe",
+      "FiveM_b2060_GTAProcess.exe",
+      "FiveM_b2189_GTAProcess.exe",
+      "FiveM_b2372_GTAProcess.exe",
+      "FiveM_b2545_GTAProcess.exe",
+      "FiveM_b2612_GTAProcess.exe",
+      "FiveM_b2699_GTAProcess.exe",
+      "FiveM_b2802_GTAProcess.exe",
+      "FiveM_b2944_GTAProcess.exe",
+      "FiveM_b3095_GTAProcess.exe",
+      "FiveM_b3258_GTAProcess.exe",
+      "FiveM_b3323_GTAProcess.exe",
+      "FiveM_b3407_GTAProcess.exe",
+      "FiveM_b3570_GTAProcess.exe"
+     ],
+     "cpu": 3
+    }
+   ]
+  },
+  {
+   "id": "fivem-gpu",
+   "name": "FiveM: Hochleistungs-GPU",
+   "desc": "Erzwingt die dedizierte Grafikkarte – wichtig bei Laptops.",
+   "cat": "FiveM",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "gpupref",
+     "exes": [
+      "%LOCALAPPDATA%\\FiveM\\FiveM.exe",
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\cache\\subprocess\\FiveM_*GTAProcess.exe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fivem-gfx",
+   "name": "FiveM FPS-Grafik",
+   "desc": "Nebelvolumen, lange Schatten, Partikelschatten, Spiegel-Weichzeichner, Tiefenschärfe und Bewegungsunschärfe aus – spürbar mehr FPS in der Stadt.",
+   "cat": "FiveM",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "xml",
+     "path": "%APPDATA%\\CitizenFX\\gta5_settings.xml",
+     "parent": "graphics",
+     "notRunning": "FiveM*",
+     "sets": {
+      "Lighting_FogVolumes": "false",
+      "Shadow_LongShadows": "false",
+      "Shadow_ParticleShadows": "false",
+      "UltraShadows_Enabled": "false",
+      "Reflection_MipBlur": "false",
+      "DoF": "false",
+      "MotionBlurStrength": "0.000000"
+     }
+    }
+   ]
+  },
+  {
+   "id": "fivem-fso",
+   "name": "FiveM: Vollbild-Optimierung aus",
+   "desc": "Klassischer Vollbild-Weg und eigene DPI-Skalierung für FiveM. Bei manchen PCs weniger Input-Lag – testen.",
+   "cat": "FiveM",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "note": "testen",
+   "actions": [
+    {
+     "type": "layers",
+     "exes": [
+      "%LOCALAPPDATA%\\FiveM\\FiveM.exe",
+      "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\cache\\subprocess\\FiveM_*GTAProcess.exe"
+     ],
+     "flags": [
+      "DISABLEDXMAXIMIZEDWINDOWEDMODE",
+      "HIGHDPIAWARE"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fivem-hitreg",
+   "name": "FiveM Hitreg-Paket",
+   "desc": "Senkt Latenz und Jitter zwischen deinem PC und dem FiveM-Server: Netzwerk-Drossel und Nagle aus, Interrupt-Moderation und RSC aus, Spiel-Priorität, QoS und 0,5-ms-Timer. Für spürbar bessere Trefferregistrierung.",
+   "cat": "FiveM",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Latenz",
+   "includes": [
+    "net-throttle-off",
+    "nagle-off",
+    "delivery-opt-off",
+    "nic-intmod-off",
+    "nic-flow-off",
+    "nic-rsc-off",
+    "prio-sep",
+    "mmcss-games",
+    "fivem-prio",
+    "fivem-qos",
+    "timer-global",
+    "wifi-power-max"
+   ],
+   "info": "Bewirkt: Pakete verlassen deinen PC ohne Sammel- und Drossel-Wartezeiten und dein Spiel hat Vorrang – die Zeit zwischen Klick und Server wird kürzer und gleichmäßiger. Achtung: Wirkt nur auf deinen PC und die Strecke zum Server; den Grund-Ping durch die Entfernung ändert es nicht. Internet trennt beim Umstellen der Netzwerkkarte kurz."
+  },
+  {
+   "id": "fivem-wasd",
+   "name": "WASD Gen 3",
+   "desc": "WASD-Optimierung der dritten Generation: kürzeste Tastenverzögerung, schnelle Wiederholrate, Tastatur- und Maus-Warteschlange entschlackt, keine USB-Sparpausen, 0,5-ms-Timer und Maus ohne Windows-Beschleunigung. Tasten und Richtungswechsel reagieren direkter.",
+   "cat": "FiveM",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Input",
+   "includes": [
+    "sticky-keys-off",
+    "key-repeat-fast",
+    "kbd-queue",
+    "mouse-queue",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "timer-global",
+    "prio-sep",
+    "fivem-prio",
+    "mouse-accel-off"
+   ],
+   "info": "Bewirkt: Windows reicht Tastendrücke und Mausbewegungen mit der kürzest möglichen Verzögerung durch und lässt die Eingabegeräte nie schlafen – Strafing und schnelle Richtungswechsel kommen unmittelbarer an. Achtung: Einige Änderungen wirken erst nach einer Neuanmeldung; die Maus fühlt sich ohne Beschleunigung zuerst ungewohnt an."
+  },
+  {
+   "id": "fivem-profile",
+   "name": "FiveM-Komplettprofil",
+   "desc": "Alle sicheren Basis-Tweaks plus FiveM-Priorität und Hochleistungs-GPU in einem Rutsch.",
+   "cat": "FiveM",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Profil",
+   "includes": [
+    "power-ultimate",
+    "gamemode-hags",
+    "windowed-opt",
+    "gamedvr-off",
+    "net-throttle-off",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "pcie-aspm-off",
+    "sticky-keys-off",
+    "lang-hotkey-off",
+    "fivem-prio",
+    "fivem-gpu"
+   ]
+  },
+  {
+   "id": "fn-prio",
+   "name": "Fortnite: hohe CPU-Priorität",
+   "desc": "Fortnite startet automatisch mit hoher Prozess-Priorität.",
+   "cat": "Fortnite",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ifeo",
+     "exes": [
+      "FortniteClient-Win64-Shipping.exe"
+     ],
+     "cpu": 3
+    }
+   ]
+  },
+  {
+   "id": "fn-gpu",
+   "name": "Fortnite: Hochleistungs-GPU",
+   "desc": "Erzwingt die dedizierte Grafikkarte für Fortnite.",
+   "cat": "Fortnite",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "gpupref",
+     "exes": [
+      "*:\\Program Files\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe",
+      "*:\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe",
+      "*:\\Games\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-logs",
+   "name": "Fortnite-Logs & Crashes leeren",
+   "desc": "Entfernt alte Log- und Absturzdateien von Fortnite.",
+   "cat": "Fortnite",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Speicher",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%LOCALAPPDATA%\\FortniteGame\\Saved\\Logs",
+      "%LOCALAPPDATA%\\FortniteGame\\Saved\\Crashes"
+     ],
+     "contents": true,
+     "notRunning": "FortniteClient*"
+    }
+   ]
+  },
+  {
+   "id": "fn-perf-mode",
+   "name": "Fortnite: Leistungsmodus erzwingen",
+   "desc": "Rendermodus „Leistung“ (DirectX 11, Mobile-Renderer) – die höchsten FPS in Fortnite. Fortnite muss geschlossen sein.",
+   "cat": "Fortnite",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ini",
+     "path": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Config\\WindowsClient\\GameUserSettings.ini",
+     "notRunning": "FortniteClient*",
+     "sets": [
+      {
+       "section": "D3DRHIPreference",
+       "key": "PreferredRHI",
+       "value": "dx11"
+      },
+      {
+       "section": "D3DRHIPreference",
+       "key": "PreferredFeatureLevel",
+       "value": "es31"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-vsync-off",
+   "name": "Fortnite: VSync aus, FPS frei",
+   "desc": "Weniger Input-Lag. Mit G-Sync lieber ein Limit knapp unter der Hz-Zahl im Spiel setzen.",
+   "cat": "Fortnite",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Latenz",
+   "actions": [
+    {
+     "type": "ini",
+     "path": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Config\\WindowsClient\\GameUserSettings.ini",
+     "notRunning": "FortniteClient*",
+     "sets": [
+      {
+       "section": "/Script/FortniteGame.FortGameUserSettings",
+       "key": "bUseVSync",
+       "value": "False"
+      },
+      {
+       "section": "/Script/FortniteGame.FortGameUserSettings",
+       "key": "FrameRateLimit",
+       "value": "0.000000"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-motionblur-off",
+   "name": "Fortnite: Bewegungsunschärfe aus",
+   "desc": "Klareres Bild bei schnellen Drehungen.",
+   "cat": "Fortnite",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ini",
+     "path": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Config\\WindowsClient\\GameUserSettings.ini",
+     "notRunning": "FortniteClient*",
+     "sets": [
+      {
+       "section": "/Script/FortniteGame.FortGameUserSettings",
+       "key": "bMotionBlur",
+       "value": "False"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-mouse-raw",
+   "name": "Fortnite: Maus-Beschleunigung aus",
+   "desc": "Fortnite verarbeitet deine Maus ohne eigene Beschleunigung.",
+   "cat": "Fortnite",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Input",
+   "actions": [
+    {
+     "type": "ini",
+     "path": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Config\\WindowsClient\\GameUserSettings.ini",
+     "notRunning": "FortniteClient*",
+     "sets": [
+      {
+       "section": "/Script/FortniteGame.FortGameUserSettings",
+       "key": "bDisableMouseAcceleration",
+       "value": "True"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-comp-gfx",
+   "name": "Fortnite: Competitive-Grafik",
+   "desc": "Schatten, Beleuchtung, Spiegelungen, Effekte und Gras auf niedrig – Sichtweite und Texturen bleiben.",
+   "cat": "Fortnite",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ini",
+     "path": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Config\\WindowsClient\\GameUserSettings.ini",
+     "notRunning": "FortniteClient*",
+     "sets": [
+      {
+       "section": "ScalabilityGroups",
+       "key": "sg.ShadowQuality",
+       "value": "0"
+      },
+      {
+       "section": "ScalabilityGroups",
+       "key": "sg.GlobalIlluminationQuality",
+       "value": "0"
+      },
+      {
+       "section": "ScalabilityGroups",
+       "key": "sg.ReflectionQuality",
+       "value": "0"
+      },
+      {
+       "section": "ScalabilityGroups",
+       "key": "sg.PostProcessQuality",
+       "value": "0"
+      },
+      {
+       "section": "ScalabilityGroups",
+       "key": "sg.EffectsQuality",
+       "value": "0"
+      },
+      {
+       "section": "ScalabilityGroups",
+       "key": "sg.FoliageQuality",
+       "value": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-fso",
+   "name": "Fortnite: Vollbild-Optimierung aus",
+   "desc": "Klassischer Vollbild-Weg und eigene DPI-Skalierung. Bei manchen PCs weniger Input-Lag – testen.",
+   "cat": "Fortnite",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "note": "testen",
+   "actions": [
+    {
+     "type": "layers",
+     "exes": [
+      "*:\\Program Files\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe",
+      "*:\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe",
+      "*:\\Games\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"
+     ],
+     "flags": [
+      "DISABLEDXMAXIMIZEDWINDOWEDMODE",
+      "HIGHDPIAWARE"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fn-profile",
+   "name": "Fortnite-Komplettprofil",
+   "desc": "Alle sicheren Basis-Tweaks plus Fortnite-Priorität und Hochleistungs-GPU.",
+   "cat": "Fortnite",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Profil",
+   "includes": [
+    "power-ultimate",
+    "gamemode-hags",
+    "windowed-opt",
+    "gamedvr-off",
+    "net-throttle-off",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "pcie-aspm-off",
+    "sticky-keys-off",
+    "lang-hotkey-off",
+    "fn-prio",
+    "fn-gpu"
+   ]
+  },
+  {
+   "id": "val-prio",
+   "name": "Valorant: hohe CPU-Priorität",
+   "desc": "Valorant startet mit hoher Priorität. Nur eine Windows-Einstellung – keine Spieldatei wird verändert.",
+   "cat": "Valorant",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ifeo",
+     "exes": [
+      "VALORANT-Win64-Shipping.exe"
+     ],
+     "cpu": 3
+    }
+   ]
+  },
+  {
+   "id": "val-gpu",
+   "name": "Valorant: Hochleistungs-GPU",
+   "desc": "Erzwingt die dedizierte Grafikkarte für Valorant.",
+   "cat": "Valorant",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "gpupref",
+     "exes": [
+      "*:\\Riot Games\\VALORANT\\live\\ShooterGame\\Binaries\\Win64\\VALORANT-Win64-Shipping.exe",
+      "*:\\Program Files\\Riot Games\\VALORANT\\live\\ShooterGame\\Binaries\\Win64\\VALORANT-Win64-Shipping.exe",
+      "*:\\Games\\Riot Games\\VALORANT\\live\\ShooterGame\\Binaries\\Win64\\VALORANT-Win64-Shipping.exe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "val-logs",
+   "name": "Valorant-Logs leeren",
+   "desc": "Entfernt alte Log- und Absturzdateien von Valorant.",
+   "cat": "Valorant",
+   "tier": 1,
+   "risk": "low",
+   "effect": "Speicher",
+   "reversible": false,
+   "actions": [
+    {
+     "type": "del",
+     "paths": [
+      "%LOCALAPPDATA%\\VALORANT\\Saved\\Logs",
+      "%LOCALAPPDATA%\\VALORANT\\Saved\\Crashes"
+     ],
+     "contents": true,
+     "notRunning": "VALORANT*"
+    }
+   ]
+  },
+  {
+   "id": "val-profile",
+   "name": "Valorant-Komplettprofil",
+   "desc": "Alle sicheren Basis-Tweaks plus Valorant-Priorität und Hochleistungs-GPU.",
+   "cat": "Valorant",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Profil",
+   "includes": [
+    "power-ultimate",
+    "gamemode-hags",
+    "windowed-opt",
+    "gamedvr-off",
+    "net-throttle-off",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "pcie-aspm-off",
+    "sticky-keys-off",
+    "lang-hotkey-off",
+    "val-prio",
+    "val-gpu"
+   ]
+  },
+  {
+   "id": "cs2-prio",
+   "name": "CS2: hohe CPU-Priorität",
+   "desc": "Counter-Strike 2 startet automatisch mit hoher Prozess-Priorität.",
+   "cat": "CS2",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ifeo",
+     "exes": [
+      "cs2.exe"
+     ],
+     "cpu": 3
+    }
+   ]
+  },
+  {
+   "id": "cs2-gpu",
+   "name": "CS2: Hochleistungs-GPU",
+   "desc": "Erzwingt die dedizierte Grafikkarte für CS2.",
+   "cat": "CS2",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "gpupref",
+     "exes": [
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cs2-fso",
+   "name": "CS2: Vollbild-Optimierung aus",
+   "desc": "Klassischer Vollbild-Weg und eigene DPI-Skalierung für CS2 – testen.",
+   "cat": "CS2",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "note": "testen",
+   "actions": [
+    {
+     "type": "layers",
+     "exes": [
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe"
+     ],
+     "flags": [
+      "DISABLEDXMAXIMIZEDWINDOWEDMODE",
+      "HIGHDPIAWARE"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cs2-profile",
+   "name": "CS2-Komplettprofil",
+   "desc": "Alle sicheren Basis-Tweaks plus CS2-Priorität und Hochleistungs-GPU.",
+   "cat": "CS2",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Profil",
+   "includes": [
+    "power-ultimate",
+    "gamemode-hags",
+    "windowed-opt",
+    "gamedvr-off",
+    "net-throttle-off",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "pcie-aspm-off",
+    "sticky-keys-off",
+    "lang-hotkey-off",
+    "cs2-prio",
+    "cs2-gpu"
+   ]
+  },
+  {
+   "id": "r6-prio",
+   "name": "R6: hohe CPU-Priorität",
+   "desc": "Rainbow Six Siege (DX11 und Vulkan) startet mit hoher Prozess-Priorität.",
+   "cat": "R6",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ifeo",
+     "exes": [
+      "RainbowSix.exe",
+      "RainbowSix_Vulkan.exe"
+     ],
+     "cpu": 3
+    }
+   ]
+  },
+  {
+   "id": "r6-gpu",
+   "name": "R6: Hochleistungs-GPU",
+   "desc": "Erzwingt die dedizierte Grafikkarte für Rainbow Six Siege.",
+   "cat": "R6",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "gpupref",
+     "exes": [
+      "*:\\Program Files (x86)\\Ubisoft\\Ubisoft Game Launcher\\games\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Program Files (x86)\\Ubisoft\\Ubisoft Game Launcher\\games\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "r6-fso",
+   "name": "R6: Vollbild-Optimierung aus",
+   "desc": "Klassischer Vollbild-Weg und eigene DPI-Skalierung für Rainbow Six – testen.",
+   "cat": "R6",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "note": "testen",
+   "actions": [
+    {
+     "type": "layers",
+     "exes": [
+      "*:\\Program Files (x86)\\Ubisoft\\Ubisoft Game Launcher\\games\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix.exe",
+      "*:\\Program Files (x86)\\Ubisoft\\Ubisoft Game Launcher\\games\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\RainbowSix_Vulkan.exe"
+     ],
+     "flags": [
+      "DISABLEDXMAXIMIZEDWINDOWEDMODE",
+      "HIGHDPIAWARE"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "r6-profile",
+   "name": "R6-Komplettprofil",
+   "desc": "Alle sicheren Basis-Tweaks plus R6-Priorität und Hochleistungs-GPU.",
+   "cat": "R6",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Profil",
+   "includes": [
+    "power-ultimate",
+    "gamemode-hags",
+    "windowed-opt",
+    "gamedvr-off",
+    "net-throttle-off",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "pcie-aspm-off",
+    "sticky-keys-off",
+    "lang-hotkey-off",
+    "r6-prio",
+    "r6-gpu"
+   ]
+  },
+  {
+   "id": "cod-prio",
+   "name": "COD: hohe CPU-Priorität",
+   "desc": "Call of Duty (cod.exe) startet automatisch mit hoher Prozess-Priorität.",
+   "cat": "COD",
+   "tier": 1,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "ifeo",
+     "exes": [
+      "cod.exe"
+     ],
+     "cpu": 3
+    }
+   ]
+  },
+  {
+   "id": "cod-gpu",
+   "name": "COD: Hochleistungs-GPU",
+   "desc": "Erzwingt die dedizierte Grafikkarte für Call of Duty.",
+   "cat": "COD",
+   "tier": 2,
+   "risk": "low",
+   "effect": "FPS",
+   "actions": [
+    {
+     "type": "gpupref",
+     "exes": [
+      "*:\\Program Files (x86)\\Call of Duty\\_retail_\\cod.exe",
+      "*:\\Call of Duty\\_retail_\\cod.exe",
+      "*:\\Program Files (x86)\\Call of Duty\\cod.exe",
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cod-fso",
+   "name": "COD: Vollbild-Optimierung aus",
+   "desc": "Klassischer Vollbild-Weg und eigene DPI-Skalierung für Call of Duty – testen.",
+   "cat": "COD",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Latenz",
+   "note": "testen",
+   "actions": [
+    {
+     "type": "layers",
+     "exes": [
+      "*:\\Program Files (x86)\\Call of Duty\\_retail_\\cod.exe",
+      "*:\\Call of Duty\\_retail_\\cod.exe",
+      "*:\\Program Files (x86)\\Call of Duty\\cod.exe",
+      "*:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\Program Files\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\SteamLibrary\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe",
+      "*:\\Games\\Steam\\steamapps\\common\\Call of Duty HQ\\cod.exe"
+     ],
+     "flags": [
+      "DISABLEDXMAXIMIZEDWINDOWEDMODE",
+      "HIGHDPIAWARE"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cod-profile",
+   "name": "COD-Komplettprofil",
+   "desc": "Alle sicheren Basis-Tweaks plus COD-Priorität und Hochleistungs-GPU.",
+   "cat": "COD",
+   "tier": 2,
+   "risk": "low",
+   "effect": "Profil",
+   "includes": [
+    "power-ultimate",
+    "gamemode-hags",
+    "windowed-opt",
+    "gamedvr-off",
+    "net-throttle-off",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "pcie-aspm-off",
+    "sticky-keys-off",
+    "lang-hotkey-off",
+    "cod-prio",
+    "cod-gpu"
+   ]
+  },
+  {
+   "id": "hung-app-timeout",
+   "name": "Hängende Programme schneller erkennen",
+   "desc": "Windows erkennt ein hängendes Programm nach 2 statt 5 Sekunden und bietet das Beenden früher an.",
+   "cat": "Registry",
+   "tier": 2,
+   "risk": "low",
+   "effect": "REAKTION",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Desktop",
+     "name": "HungAppTimeout",
+     "value": "2000",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "shutdown-fast",
+   "name": "Schneller herunterfahren",
+   "desc": "Windows wartet beim Herunterfahren 2 statt 20 Sekunden auf Programme und 2 statt 5 Sekunden auf Dienste.",
+   "cat": "Registry",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "REAKTION",
+   "restart": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Desktop",
+     "name": "WaitToKillAppTimeout",
+     "value": "2000",
+     "kind": "String"
+    },
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control",
+     "name": "WaitToKillServiceTimeout",
+     "value": "2000",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Beim Herunterfahren wartet Windows nur noch 2 statt 20 Sekunden auf Programme und 2 statt 5 Sekunden auf Dienste. Achtung: Programme, die beim Beenden noch speichern, können abgebrochen werden – vorher alles speichern."
+  },
+  {
+   "id": "autoend-tasks",
+   "name": "Programme beim Herunterfahren automatisch beenden",
+   "desc": "Kein Warten mehr auf „Dieses Programm verhindert das Herunterfahren“.",
+   "cat": "Registry",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "REAKTION",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Control Panel\\Desktop",
+     "name": "AutoEndTasks",
+     "value": "1",
+     "kind": "String"
+    }
+   ],
+   "tags": [
+    "delay"
+   ],
+   "info": "Bewirkt: Hängende Programme werden beim Herunterfahren ohne Nachfrage beendet. Achtung: Ungespeicherte Arbeit geht dann ohne Warnung verloren."
+  },
+  {
+   "id": "taskbar-hover-fast",
+   "name": "Taskleisten-Vorschau ohne Verzögerung",
+   "desc": "Die Fenster-Vorschau über der Taskleiste erscheint nach 100 statt 400 Millisekunden.",
+   "cat": "Registry",
+   "tier": 1,
+   "risk": "low",
+   "effect": "REAKTION",
+   "relog": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ExtendedUIHoverTime",
+     "value": 100,
+     "kind": "DWord"
+    }
+   ],
+   "tags": [
+    "delay"
+   ]
+  },
+  {
+   "id": "paging-executive",
+   "name": "Windows-Kern im Arbeitsspeicher halten",
+   "desc": "Treiber und Systemkern werden nie auf die Festplatte ausgelagert – weniger Nachladeruckler.",
+   "cat": "System",
+   "tier": 2,
+   "risk": "mid",
+   "effect": "LATENZ",
+   "restart": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+     "name": "DisablePagingExecutive",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Treiber und Windows-Kern bleiben immer im Arbeitsspeicher und werden nie ausgelagert – weniger Nachladeruckler. Achtung: braucht etwas mehr RAM, erst ab 16 GB empfehlenswert. Neustart nötig."
+  },
+  {
+   "id": "audio-ducking-off",
+   "name": "Keine Lautstärke-Absenkung bei Anrufen",
+   "desc": "Windows dreht dein Spiel nicht mehr um 80 % leiser, sobald im Discord oder Teamspeak ein Anruf startet.",
+   "cat": "System",
+   "tier": 0,
+   "risk": "low",
+   "effect": "Komfort",
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKCU:\\Software\\Microsoft\\Multimedia\\Audio",
+     "name": "UserDuckingPreference",
+     "value": 3,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Stellt bei „Kommunikation“ in den Windows-Soundeinstellungen „Nichts unternehmen“ ein – Spiel und Voice-Chat bleiben gleich laut. Achtung: Nichts, du regelst die Lautstärke weiter selbst."
+  },
+  {
+   "id": "ntfs-8dot3-off",
+   "name": "Kurze 8.3-Dateinamen aus",
+   "desc": "Windows legt zu neuen Dateien keine zusätzlichen Kurznamen wie PROGRA~1 mehr an – weniger Arbeit bei vielen kleinen Dateien, etwa Shader- und Mod-Ordnern.",
+   "cat": "System",
+   "tier": 3,
+   "risk": "mid",
+   "effect": "Datenträger",
+   "restart": true,
+   "actions": [
+    {
+     "type": "reg",
+     "path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+     "name": "NtfsDisable8dot3NameCreation",
+     "value": 1,
+     "kind": "DWord"
+    }
+   ],
+   "info": "Bewirkt: Neue Dateien bekommen nur noch ihren normalen Namen, das spart Schreibarbeit auf der Festplatte. Achtung: Sehr alte Programme (etwa vor 2005), die nur mit Kurznamen umgehen können, finden neue Dateien eventuell nicht. Vorhandene Dateien behalten ihre Kurznamen."
+  },
+  {
+   "id": "fn-qos",
+   "name": "Fortnite: Netzwerk-Vorrang (QoS)",
+   "desc": "Markiert Fortnite-Datenpakete mit höchster Priorität (DSCP 46). Kostet keine FPS.",
+   "cat": "Fortnite",
+   "tier": 1,
+   "risk": "low",
+   "effect": "PING",
+   "actions": [
+    {
+     "type": "qos",
+     "name": "Fortnite",
+     "exes": [
+      "FortniteClient-Win64-Shipping.exe"
+     ],
+     "dscp": 46
+    }
+   ]
+  },
+  {
+   "id": "fivem-qos",
+   "name": "FiveM: Netzwerk-Vorrang (QoS)",
+   "desc": "Markiert die Datenpakete des FiveM-Spielprozesses mit höchster Priorität (DSCP 46). Kostet keine FPS.",
+   "cat": "FiveM",
+   "tier": 1,
+   "risk": "low",
+   "effect": "PING",
+   "actions": [
+    {
+     "type": "qos",
+     "name": "FiveM",
+     "exes": [
+      "FiveM_GTAProcess.exe",
+      "FiveM_b2060_GTAProcess.exe",
+      "FiveM_b2189_GTAProcess.exe",
+      "FiveM_b2372_GTAProcess.exe",
+      "FiveM_b2545_GTAProcess.exe",
+      "FiveM_b2612_GTAProcess.exe",
+      "FiveM_b2699_GTAProcess.exe",
+      "FiveM_b2802_GTAProcess.exe",
+      "FiveM_b2944_GTAProcess.exe",
+      "FiveM_b3095_GTAProcess.exe",
+      "FiveM_b3258_GTAProcess.exe",
+      "FiveM_b3323_GTAProcess.exe",
+      "FiveM_b3407_GTAProcess.exe",
+      "FiveM_b3570_GTAProcess.exe"
+     ],
+     "dscp": 46
+    }
+   ]
+  },
+  {
+   "id": "fn-lowping",
+   "name": "Fortnite Low-Ping-Paket",
+   "desc": "Alles, was auf deinem PC und im Heimnetz Ping und Schwankungen senkt – ohne FPS zu kosten.",
+   "cat": "Fortnite",
+   "effect": "PING",
+   "includes": [
+    "fn-qos",
+    "net-throttle-off",
+    "nic-flow-off",
+    "nic-eee-off",
+    "nic-green-off",
+    "wifi-power-max",
+    "delivery-opt-off",
+    "store-autoupdate-off",
+    "fn-prio"
+   ],
+   "tier": 2,
+   "risk": "mid",
+   "info": "Bewirkt: Netzwerk-Vorrang für Fortnite, keine Netzwerk-Drosselung, keine Energiespar-Funktionen der Netzwerkkarte, kein Hintergrund-Download von Windows und Store, hohe CPU-Priorität – weniger Ping-Spitzen und Schwankungen. Achtung: Den Grund-Ping bestimmt die Strecke zum Server; wähle in Fortnite die Subregion mit dem niedrigsten Wert aus dem Ping-Test."
+  },
+  {
+   "id": "react-pack",
+   "name": "Reaktions-Paket",
+   "desc": "System-Feinabstimmung für maximale Reaktionsgeschwindigkeit: Vordergrund-Boost, MMCSS, präziser Timer, keine Drosselung, kürzere Verzögerungen.",
+   "cat": "System",
+   "effect": "REAKTION",
+   "includes": [
+    "prio-sep",
+    "mmcss-games",
+    "power-throttle-off",
+    "timer-global",
+    "menu-delay",
+    "startup-delay-off",
+    "hung-app-timeout",
+    "mouse-accel-off",
+    "usb-suspend-off",
+    "paging-executive"
+   ],
+   "tier": 2,
+   "risk": "mid",
+   "info": "Bewirkt: Vordergrund-Boost, MMCSS-Vorrang, präziser Timer, keine Energiespar-Drosselung, kürzere Menü- und Startverzögerungen, keine Mausbeschleunigung und der Windows-Kern im Arbeitsspeicher – das System reagiert spürbar direkter. Achtung: enthält fortgeschrittene Tweaks; Hintergrundprogramme laufen langsamer, solange ein Spiel vorne ist."
+  },
+  {
+   "id": "stable-pack",
+   "name": "Stabilitäts-Paket",
+   "desc": "Stabilere Gesamtperformance: keine Energiespar-Aussetzer, keine Wartung und keine Downloads im Hintergrund, mehr Geduld für den Grafiktreiber.",
+   "cat": "System",
+   "effect": "STABILITÄT",
+   "includes": [
+    "power-throttle-off",
+    "pcie-aspm-off",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "tdr-delay",
+    "maintenance-off",
+    "update-noreboot",
+    "delivery-opt-off",
+    "store-autoupdate-off"
+   ],
+   "tier": 2,
+   "risk": "mid",
+   "info": "Bewirkt: keine Energiespar-Aussetzer bei PCIe und USB, keine automatische Wartung, keine Update-Neustarts und Hintergrund-Downloads, mehr Geduld für den Grafiktreiber – weniger plötzliche Ruckler. Achtung: Wartung und Store-Updates startest du dann selbst."
+  },
+  {
+   "id": "mouse-pack",
+   "name": "Maus-Präzision",
+   "desc": "Präzisere Maussteuerung: keine Beschleunigung, kleinerer Puffer, USB ohne Energiesparen und präziser Timer.",
+   "cat": "Eingabe",
+   "effect": "PRÄZISION",
+   "includes": [
+    "mouse-accel-off",
+    "mouse-queue",
+    "usb-suspend-off",
+    "usb3-lpm-off",
+    "timer-global"
+   ],
+   "tier": 2,
+   "risk": "mid",
+   "info": "Bewirkt: keine Mausbeschleunigung, kleinerer Maus-Puffer, USB ohne Energiesparen und präziser Timer – Mausbewegungen bilden sich 1:1 und gleichmäßig ab. Achtung: Bei Mäusen mit 4000 bis 8000 Hz den Maus-Puffer im Zweifel zurücksetzen."
+  }
+ ],
+ "gamemode": {
+  "groups": [
+   {
+    "id": "cloud",
+    "name": "Cloud & Office",
+    "desc": "OneDrive, Teams, Outlook (neu)",
+    "default": true,
+    "procs": [
+     "OneDrive",
+     "ms-teams",
+     "Teams",
+     "olk"
+    ]
+   },
+   {
+    "id": "windows",
+    "name": "Windows-Extras",
+    "desc": "Widgets, Smartphone-Link, Copilot",
+    "default": true,
+    "procs": [
+     "Widgets",
+     "WidgetService",
+     "PhoneExperienceHost",
+     "YourPhone",
+     "CrossDeviceService",
+     "Copilot"
+    ]
+   },
+   {
+    "id": "updater",
+    "name": "Updater & Helfer",
+    "desc": "Adobe-, Google-, Edge- und Java-Updater",
+    "default": true,
+    "procs": [
+     "AdobeARM",
+     "AdobeCollabSync",
+     "CCXProcess",
+     "GoogleUpdate",
+     "jusched",
+     "MicrosoftEdgeUpdate",
+     "GoogleCrashHandler",
+     "GoogleCrashHandler64"
+    ]
+   },
+   {
+    "id": "overlays",
+    "name": "Overlays & Game Bar",
+    "desc": "NVIDIA- und AMD-Overlay, Xbox Game Bar und Xbox-App – Instant Replay ist dann aus",
+    "default": true,
+    "procs": [
+     "NVIDIA Overlay",
+     "NVIDIA Share",
+     "nvsphelper64",
+     "NVIDIA Web Helper",
+     "AMDRSServ",
+     "AMDRSSrcExt",
+     "RadeonSoftware",
+     "GameBar",
+     "GameBarFTServer",
+     "XboxPcApp"
+    ]
+   },
+   {
+    "id": "media",
+    "name": "Musik & Video",
+    "desc": "Spotify, VLC – deine Musik stoppt",
+    "default": false,
+    "procs": [
+     "Spotify",
+     "vlc"
+    ]
+   },
+   {
+    "id": "chat",
+    "name": "Messenger (ohne Discord)",
+    "desc": "WhatsApp, Telegram, Skype",
+    "default": false,
+    "procs": [
+     "WhatsApp",
+     "Telegram",
+     "Skype"
+    ]
+   },
+   {
+    "id": "browser",
+    "name": "Browser",
+    "desc": "Chrome, Edge, Firefox, Opera, Brave – offene Tabs gehen zu",
+    "default": false,
+    "procs": [
+     "chrome",
+     "msedge",
+     "firefox",
+     "opera",
+     "brave"
+    ]
+   }
+  ],
+  "services": [
+   {
+    "name": "WSearch",
+    "label": "Windows-Suche (Indexierung)"
+   },
+   {
+    "name": "Spooler",
+    "label": "Druckwarteschlange"
+   },
+   {
+    "name": "MapsBroker",
+    "label": "Offline-Karten"
+   },
+   {
+    "name": "Fax",
+    "label": "Fax"
+   },
+   {
+    "name": "WerSvc",
+    "label": "Fehlerberichterstattung"
+   },
+   {
+    "name": "lfsvc",
+    "label": "Standortdienst"
+   },
+   {
+    "name": "wisvc",
+    "label": "Windows-Insider-Dienst"
+   },
+   {
+    "name": "RetailDemo",
+    "label": "Vorführmodus"
+   },
+   {
+    "name": "TrkWks",
+    "label": "Link-Tracking"
+   },
+   {
+    "name": "stisvc",
+    "label": "Bilderfassung (WIA)"
+   },
+   {
+    "name": "BITS",
+    "label": "Hintergrund-Übertragung"
+   },
+   {
+    "name": "wuauserv",
+    "label": "Windows Update"
+   },
+   {
+    "name": "DoSvc",
+    "label": "Update-Verteilung"
+   },
+   {
+    "name": "edgeupdate",
+    "label": "Edge-Updater"
+   },
+   {
+    "name": "edgeupdatem",
+    "label": "Edge-Updater 2"
+   },
+   {
+    "name": "gupdate",
+    "label": "Google-Updater"
+   },
+   {
+    "name": "gupdatem",
+    "label": "Google-Updater 2"
+   },
+   {
+    "name": "AdobeARMservice",
+    "label": "Adobe-Updater"
+   },
+   {
+    "name": "ClickToRunSvc",
+    "label": "Office-Updater"
+   },
+   {
+    "name": "NvContainerLocalSystem",
+    "label": "NVIDIA-App-Dienst"
+   }
+  ]
+ },
+ "scanner": {
+  "apis": [
+   "WriteProcessMemory",
+   "ReadProcessMemory",
+   "CreateRemoteThread",
+   "VirtualAllocEx",
+   "NtWriteVirtualMemory",
+   "NtReadVirtualMemory",
+   "NtCreateThreadEx",
+   "RtlCreateUserThread",
+   "ZwReadVirtualMemory"
+  ],
+  "crit": [
+   "iqvw64e.sys",
+   "capcom.sys",
+   "gdrv.sys",
+   "kdmapper",
+   "physmeme"
+  ],
+  "kwTools": [
+   "cheatengine",
+   "processhacker",
+   "systeminformer",
+   "x64dbg",
+   "x32dbg",
+   "dnspy",
+   "ida64",
+   "autohotkey",
+   "tinytask",
+   "macrorecorder",
+   "jitbit",
+   "pulover"
+  ],
+  "kwCrit": [
+   "eulen",
+   "redengine",
+   "hammafia",
+   "desudo",
+   "brutan",
+   "kdmapper",
+   "aimbot",
+   "triggerbot",
+   "wallhack",
+   "hwidspoof",
+   "spoofer"
+  ],
+  "kwWarn": [
+   "cheat",
+   "hack",
+   "inject",
+   "executor",
+   "bypass",
+   "unban",
+   "skript"
+  ],
+  "dns": "cheat|aimbot|spoofer|unknowncheats|eulen|redengine|executor",
+  "hosts": "easyanticheat|battleye|vanguard|riotgames|cfx\\.re|fivem|faceit",
+  "threat": "GameHack|Cheat|Injector|Spoofer"
+ }
+}

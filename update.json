@@ -1,66 +1,70 @@
 {
- "version": "2.0.1",
+ "version": "2.0.2",
  "date": "2026-11-06",
  "minApp": "2.0.0",
  "notes": {
   "neu": [
-   "Leistungstest: FPS, Ping und Latenz vorher und nachher messen"
+   "Leistungstest: FPS, 1 % Low, Latenz und Ping vorher und nachher im Spiel messen",
+   "4 neue Tweaks, darunter keine Lautstärke-Absenkung bei Discord-Anrufen und Transparenzeffekte aus"
   ],
   "verbessert": [
-   "4 neue Tweaks, darunter keine Lautstärke-Absenkung bei Discord-Anrufen"
+   "HitReg und WASD Gen 3 wurden deutlich erweitert",
+   "In den erweiterten FiveM-Optionen sieht man jetzt klar, was an und aus ist",
+   "Windows-Suchindex lässt sich einzeln schalten, ohne die Prozess-Diät",
+   "Neue Stufen: Free zum Ausprobieren, Starter rund 60, Pro über 100, Ultimate alles"
   ],
   "entfernt": []
  },
  "files": [
   {
    "path": "app/index.html",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/app/index.html",
-   "sha256": "ba6aa68bc9d568dad33633e28800a4d4638c6a2b65a9e13be38344147b1fd87f",
-   "size": 333657
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/app/index.html",
+   "sha256": "e95affd9d73f20f2d3eb37371ddb0226c638a4378c6e3833dd61219363f95eb1",
+   "size": 338713
   },
   {
    "path": "engine/KaritoEngine.ps1",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/KaritoEngine.ps1",
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/KaritoEngine.ps1",
    "sha256": "9201b79a670718a591d17dc105924ea3c6c3cd6fccf1a49f82ddb8b259589c4e",
    "size": 93555
   },
   {
    "path": "engine/KaritoInput.ps1",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/KaritoInput.ps1",
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/KaritoInput.ps1",
    "sha256": "2718c48c8f2ae4c5cf77e3fd1c7399464db6fbc7b16fa032bb56878cb9af9869",
    "size": 2286
   },
   {
    "path": "engine/KaritoMonitor.ps1",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/KaritoMonitor.ps1",
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/KaritoMonitor.ps1",
    "sha256": "59faeef4afac43abf9f13a1e76985ec187f8d2819b6eee817fc288fc3235909b",
    "size": 3454
   },
   {
    "path": "engine/KaritoScanner.cs",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/KaritoScanner.cs",
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/KaritoScanner.cs",
    "sha256": "45370c60cd8034147581c10866a5d5e1f07e05035c6cb5f0a6605aeea04738b1",
    "size": 7775
   },
   {
    "path": "engine/KaritoScanner.ps1",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/KaritoScanner.ps1",
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/KaritoScanner.ps1",
    "sha256": "1d3b65368e262c359897318a7f4737e13b19579b841368640d84fbfe8c522e15",
    "size": 29657
   },
   {
    "path": "engine/KaritoTimer.ps1",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/KaritoTimer.ps1",
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/KaritoTimer.ps1",
    "sha256": "0e08908c0475715682052d62f728d70203b8bb496aa1e96f4b2b8024b53676bb",
    "size": 2138
   },
   {
    "path": "engine/tweaks.json",
-   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.1/engine/tweaks.json",
-   "sha256": "16f691fcca72d29793fb3cb3fa799812c56264f4879ec343667e78ad2943d6cf",
-   "size": 91332
+   "url": "https://raw.githubusercontent.com/Karito1001/karito-updates/main/2.0.2/engine/tweaks.json",
+   "sha256": "50b4c172e8ec3efd55a73d168da33eba98e1c032579655d3279fc150ab6d3d8f",
+   "size": 91816
   }
  ],
  "revoked": [],
- "sig": "7DwG62LTMWT86sGLdTSAOFQzNkbLm2WeFSbOTwD58JpCjWDfviz6LweAO56qslCb6MioAzmdnaVBV1TDl3R7Cg"
+ "sig": "Typ6cErmGp9ThLUy4X0GgNf_UmPLCwirg3DFTRylZIecsSXmKOG22wYv6wmt4K2s9T1jg2DlrSgiBMms1eATAw"
 }
